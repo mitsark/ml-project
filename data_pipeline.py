@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from transformers import RobertaTokenizer
+
+    # Load and explore
 import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 
@@ -449,9 +451,9 @@ def create_complete_pipeline(
         dict: Contains loaders, dataset, tokenizer, and indices
     """
     print("\n")
-    print("╔" + "=" * 68 + "╗")
-    print("║" + " MENTAL HEALTH SENTIMENT ANALYSIS - DATA PIPELINE ".center(68) + "║")
-    print("╚" + "=" * 68 + "╝")
+    print("*" * 70)
+    print(" MENTAL HEALTH SENTIMENT ANALYSIS - DATA PIPELINE ".center(70))
+    print("*" * 70)
     
     # Load and explore
     df = load_and_explore_data(csv_path)
