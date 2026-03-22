@@ -1,0 +1,35 @@
+﻿Mental Health Sentiment Analysis using TRABSA Architecture
+By Group 29: 
+Mitanshu Sarkar (2023A3PS0194G)
+Tanvi Anurag Desai (2023A8PS0828G)
+Nilay Toshniwal (2023AAPS0590G)
+
+
+
+
+Abstract 
+Project Aim and Objectives
+The primary goal of the project is the implementation and adaptation of the TRABSA (Transformer + Attention BiLSTM) model for the classification of mental health status in user-generated text. The original TRABSA methodology was created for three-category sentiment analysis on a large dataset of more than 1.6 million noisy tweets; however, the objective of this initiative will be to use the existing TRABSA infrastructure to convert the data into seven different descriptions of the mental health status of an individual (i.e., Normal, Depressed, Suicidal, Anxiety, Stressed, Bi-Polar, or Personality Disordered). In addition to accurately detecting complex forms of psychological distress, the purpose of the research is to maintain high levels of explainability by using explainable artificial intelligence methods (SHAP, LIME).
+Project Plan & Implementation Path
+The project will be executed in sequential phases for systematic implementation:
+* Phase 1: Data Acquisition & Preprocessing: First, we will load ~51,000 statements from the Kaggle data set and clean the text (remove URLs, mentions, and special characters). We will then correspond the 7 text labels (0-6) to numbers. Lastly, we will examine the distribution of the text length to identify an optimal tokenization scheme.
+* Phase 2: Baseline Modeling: Before deploying deep learning, we will create  performance floors using baseline models; Logistic Regression and LinearSVC that utilize TF-IDF features, followed by a Vanilla BiLSTM that utilizes GloVe embeddings.
+* Phase 3: TRABSA Architecture Adaptation: We will build the four-stage TRABSA pipeline:
+   * Stage 1: RoBERTa for contextual feature extraction.
+   * Stage 2: A Custom Attention Layer for token importance weighting.
+   * Stage 3: A 2-layer Bidirectional LSTM for sequential context capture.
+   * Stage 4: A modified Dense Head (Fully Connected) to output 7 classes instead of the original 3.
+* Phase 4: Training & Mitigation: Categorical Cross-Entropy loss will be used to train the model. We will put strategies in place to deal with the severe class imbalance and smaller dataset size.
+* Phase 5: Evaluation & Explainability: We will evaluate the model's performance and will report precision, recall, F1 scores and will develop a 7×7 confusion matrix. Next, we will use LIME (word-level model contribution) and SHAP (feature contribution) for understanding clinically meaningful interpretations of the model predictions, as opposed to being dependent on false correlations.
+Possible Pitfalls in Methodology and Models
+There are a number of important issues that need to be kept an eye on when switching from the Sentiment140 dataset to a specialized Mental Health dataset:
+* Severe Class Imbalance: The new dataset is extremely skewed; for example, "Personality Disorder" makes up only about 2% of the data, whereas "Normal" and "Depression" make up about 60%. The model will strongly favor the majority classes if this issue is not resolved. To resolve this, when calculating the PyTorch loss, we need to use methods like SMOTE (Synthetic Minority Over-sampling Technique), Random Over-Sampling, or class weights. 
+* Overfitting Risk (Dataset Size): Initially trained on 1.6 million records, TRABSA is a robust deep learning architecture. There are only about 53,000 records in the new dataset. Direct application of the entire TRABSA model may result in rapid overfitting. To avoid overfitting, we will need to use aggressive dropout rates, early stopping techniques, and possibly freeze the RoBERTa base layers.
+* Context Truncation: On websites like Reddit, disclosures about mental health are frequently lengthy paragraphs. There is a strict 512-token cap on RoBERTa. Critical distress indicators will be cut off and lost if they come at the end of a lengthy post. To mitigate this, in Phase 1, we will examine token lengths and, if necessary, apply chunking or truncation from the front or middle.
+References to Contextualize the Project
+1. Original TRABSA Architecture: Transformer + Attention BILSTM for Tweet Sentiment Analysis. Nature Scientific Reports (Official): https://www.nature.com/articles/s41598-024-76079-5.
+2. Dataset Source: Sarkar, S. (2023). Sentiment Analysis for Mental Health. Kaggle. https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health
+3. Domain Application: Ding Z, Wang Z, Zhang Y (2025) Trade-offs between machine learning and deep learning for mental illness detection on social media. https://pubmed.ncbi.nlm.nih.gov/40281061/. 
+This paper contextualizes the exact dataset being used and discusses the baseline performances of ML vs. DL models for mental health text classification.
+4. Explainability in NLP: Ribeiro, M. T., Singh, S., & Guestrin, C. (2016). "Why Should I Trust You?": Explaining the Predictions of Any Classifier. https://arxiv.org/abs/1602.04938
+This is a foundational paper for LIME, validating Phase 5 of our methodology.

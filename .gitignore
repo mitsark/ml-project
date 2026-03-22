@@ -1,0 +1,29 @@
+# Python cache and environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large/temporary outputs
+*.pth
+*.pt
+*.bin
+*.log
+
+# Generated artifacts
+baseline_confusion_matrix.png
+data_exploration.png
+trabsa_confusion_matrix.png
+training_history.png
+model_comparison.png
+MID_REVIEW_SUMMARY.txt
+
+# Local dataset copies (use shared Drive path in Colab)
+Combined Data.csv
+
+# Hugging Face / misc caches
+.cache/
