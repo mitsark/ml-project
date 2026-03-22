@@ -1,4 +1,5 @@
 import traceback
+import os
 import numpy as np
 import torch
 
@@ -15,7 +16,8 @@ def run_check(name, fn, results):
 
 
 def main():
-    csv_path = "Combined Data.csv"
+    csv_path = os.getenv("DATA_CSV", "Combined Data.csv")
+    print(f"Using dataset: {csv_path}")
     results = []
 
     state = {

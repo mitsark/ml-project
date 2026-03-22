@@ -2,6 +2,7 @@ import time
 import numpy as np
 import torch
 import torch.nn as nn
+import os
 
 from data_pipeline import create_complete_pipeline
 from trabsa_model import TRABSA
@@ -16,12 +17,15 @@ def main():
     np.random.seed(42)
     torch.manual_seed(42)
 
+    csv_path = os.getenv("DATA_CSV", "Combined Data.csv")
+    print(f"Using dataset: {csv_path}")
+
     print("=" * 80)
     print("TRABSA 3-EPOCH TIMING CHECK")
     print("=" * 80)
 
     pipeline = create_complete_pipeline(
-        csv_path="Combined Data.csv",
+        csv_path=csv_path,
         batch_size=8,
         sample_size=512,
         tokenization_mode="streamed",
